@@ -54,7 +54,7 @@ You can also run tests within Visual Studio Code by using the Test Explorer or t
 
 - Tests are written using SpecFlow with NUnit as the test runner.
 - Playwright is used for browser automation.
-- You might see warnings about non-nullable fields if you haven’t initialized some private fields in constructors — these can be addressed as needed.
+- You might see warnings about non-nullable fields if you haven’t initialized some private fields in constructors, these can be addressed as needed.
 
 ## Contact
 
