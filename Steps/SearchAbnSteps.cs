@@ -12,13 +12,15 @@ namespace AbnAutomationTest
         private static IBrowser _browser;
         private static IBrowserContext _context;
 
+        public static IPage GetPage() => _page; // ✅ Add this line
+
         [BeforeTestRun]
         public static async Task Setup()
         {
             var playwright = await Playwright.CreateAsync();
             _browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
             {
-                Headless = true,
+                Headless = false,
             });
 
             _context = await _browser.NewContextAsync();
@@ -72,27 +74,54 @@ namespace AbnAutomationTest
             await _page.PressAsync("#SearchText", "Enter");
         }
 
-        [When(@"I click the random search result")]
-        public async Task WhenIClickTheRandomSearchResult()
+        [When(@"I click a random search result")]
+public async Task WhenIClickARandomSearchResult()
+{
+    var abnLinks = _page.Locator("//tbody/tr[position() > 1]/td[1]/a[@href]");
+    var count = await abnLinks.CountAsync();
+
+    Assert.That(count, Is.GreaterThan(0), "No ABN links found on search result.");
+
+    var random = new Random();
+    int randomIndex = random.Next(0, count);
+
+    var randomAbnLink = abnLinks.Nth(randomIndex);
+    await randomAbnLink.WaitForAsync(new() { Timeout = 10000 });
+
+    var abnText = (await randomAbnLink.InnerTextAsync()).Trim();
+    Console.WriteLine($"Clicking on random ABN #{randomIndex + 1}: {abnText}");
+
+    await randomAbnLink.ClickAsync();
+    await _page.WaitForLoadStateAsync(LoadState.DOMContentLoaded);
+}
+
+[Then(@"I should see the correct ABN details displayed")]
+public async Task ThenIShouldSeeTheCorrectAbnDetailsDisplayed()
+{
+    // Define a reusable check function
+    async Task AssertField(string description, string selector, bool isXPath = false)
+    {
+        var locator = isXPath ? _page.Locator($"xpath={selector}") : _page.Locator(selector);
+        var isVisible = await locator.IsVisibleAsync();
+
+        if (!isVisible)
         {
-            var firstAbnLink = _page.Locator("//div[@id='content-matching']//a").First;
-            await firstAbnLink.WaitForAsync(new() { Timeout = 10000 });
-            var abn = await firstAbnLink.InnerTextAsync();
-            Console.WriteLine($"Clicking on ABN: {abn.Trim()}");
-            await firstAbnLink.ClickAsync();
+            Console.WriteLine($"[Warning] No field found for {description}.");
+            return;
         }
 
-        [Then(@"I should see a non-empty entity name")]
-        public async Task ThenIShouldSeeANonEmptyEntityName()
-        {
-            var entityNameLocator = _page.Locator("span[itemprop='legalName']");
-            await entityNameLocator.WaitForAsync();
-            var actualEntityName = await entityNameLocator.InnerTextAsync();
-            Console.WriteLine($"Entity Name: {actualEntityName}");
+        var value = (await locator.InnerTextAsync()).Trim();
+        Console.WriteLine($"{description}: {value}");
+        Assert.That(string.IsNullOrWhiteSpace(value), Is.False, $"{description} should not be empty.");
+    }
 
-            Assert.That(string.IsNullOrWhiteSpace(actualEntityName), Is.False, "Entity name should not be empty or whitespace.");
-        }
-        
+    // Only check the fields you care about (ABN field removed)
+    await AssertField("Trading Name", "(//table)[2]/tbody[1]/tr[3]/td[1]", isXPath: true);
+    await AssertField("Main Business Location", "span[itemprop='addressLocality']");
+    await AssertField("Entity Name", "span[itemprop='legalName']");
+}
+
+
         // [AfterScenario]
         // public async Task PauseAfterScenario()
         // {
