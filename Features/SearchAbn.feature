@@ -33,13 +33,13 @@ Feature: ABN Lookup Search
     And I press enter
     Then I should see results containing "Telstra"
 
-  Scenario: Search for Telstra and validate entity name
+  Scenario: Search for Telstra and validate business details
     Given I open the ABN Lookup website
     When I enter "Telstra" in the search field
     And I press enter
     Then I should see results containing "Telstra"
-    When I click the random search result
-    Then I should see a non-empty entity name
+    When I click a random search result
+    Then I should see the correct ABN details displayed
 
 
 
