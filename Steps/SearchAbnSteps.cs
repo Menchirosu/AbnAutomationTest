@@ -12,7 +12,7 @@ namespace AbnAutomationTest
         private static IBrowser _browser;
         private static IBrowserContext _context;
 
-        public static IPage GetPage() => _page; // ✅ Add this line
+        public static IPage GetPage() => _page;
 
         [BeforeTestRun]
         public static async Task Setup()
@@ -114,7 +114,7 @@ namespace AbnAutomationTest
                 Assert.That(string.IsNullOrWhiteSpace(value), Is.False, $"{description} should not be empty.");
             }
 
-    // Only check the fields you care about (ABN field removed)
+            // Relevant fields validation
             await AssertField("Trading Name", "(//table)[2]/tbody[1]/tr[3]/td[1]", isXPath: true);
             await AssertField("Main Business Location", "span[itemprop='addressLocality']");
             await AssertField("Entity Name", "span[itemprop='legalName']");

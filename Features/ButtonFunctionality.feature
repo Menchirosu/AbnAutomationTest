@@ -1,6 +1,6 @@
 Feature: Button functionality
 
-  Scenario: Verify Search and Tools & resources buttons work correctly
+  Scenario: Verify Home page buttons work correctly
     Given I am on the homepage
     Then I should see the following buttons enabled and clickable:
       | ButtonSelector                                         |

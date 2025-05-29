@@ -74,12 +74,12 @@ namespace AbnAutomationTest.Features
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify Search and Tools & resources buttons work correctly")]
-        public void VerifySearchAndToolsResourcesButtonsWorkCorrectly()
+        [NUnit.Framework.DescriptionAttribute("Verify Home page buttons work correctly")]
+        public void VerifyHomePageButtonsWorkCorrectly()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify Search and Tools & resources buttons work correctly", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify Home page buttons work correctly", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 3
   this.ScenarioInitialize(scenarioInfo);
 #line hidden

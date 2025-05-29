@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AbnAutomationTest")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e6212613432272975665329d34bc694a26eccf51")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ccce5c98e025e550c06d6c47fe654695a5ab525e")]
 [assembly: System.Reflection.AssemblyProductAttribute("AbnAutomationTest")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AbnAutomationTest")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

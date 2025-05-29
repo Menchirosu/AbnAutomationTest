@@ -36,7 +36,7 @@ namespace AbnAutomationTest.Steps
         {
             await _page.Locator(selector).ClickAsync();
 
-            // Wait until network is idle, so the page should be fully loaded
+            // Wait until the page is fully loaded
             await _page.WaitForLoadStateAsync(LoadState.NetworkIdle);
         }
 
@@ -57,7 +57,7 @@ namespace AbnAutomationTest.Steps
                 { "lookup tools", "/tools/abnlookup" },
                 { "register", "/for-business/registering-a-business-name/" },
                 { "help section", "/help" },
-                { "abn details", "https://www.abr.gov.au/" },  // partial domain match, no protocol
+                { "abn details", "https://www.abr.gov.au/" },
                 { "web services", "/webservices" },
                 { "about us", "/about" },
                 { "contact us", "/contact" },
